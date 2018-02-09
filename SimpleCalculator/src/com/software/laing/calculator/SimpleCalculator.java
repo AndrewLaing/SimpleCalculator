@@ -3,15 +3,15 @@
  * Author:      Andrew Laing
  * Email:       parisianconnections@gmail.com
  * Date:        9 Feb 2018
- * Description: 
+ * Description: A simple standard calculator written in Java.
  */
 package com.software.laing.calculator;
 
 import javax.swing.SwingUtilities;
 
 public class SimpleCalculator {
-	public static void main(String[] args) 
-	{
+    public static void main(String[] args) 
+    {
         SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
@@ -20,5 +20,5 @@ public class SimpleCalculator {
         });
 
         System.out.println("A Swing GUI should be visible");
-	}
+    }
 }

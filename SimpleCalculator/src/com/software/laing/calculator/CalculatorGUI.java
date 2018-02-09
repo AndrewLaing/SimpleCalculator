@@ -20,111 +20,111 @@ import javax.swing.border.EmptyBorder;
 
 
 public class CalculatorGUI implements ActionListener, KeyListener
-{	
-	private DecimalFormat resultFormat = new DecimalFormat("#0");	
-	private DecimalFormat scientificFormat = new DecimalFormat("0.000E00");
-	
-	private double calculationResult;
-	private double lastNumberEntered;
-	private double memoryValue;
+{   
+    private DecimalFormat resultFormat = new DecimalFormat("#0");   
+    private DecimalFormat scientificFormat = new DecimalFormat("0.000E00");
+    
+    private double calculationResult;
+    private double lastNumberEntered;
+    private double memoryValue;
 
-	private String currentOperation;
-	
-	private byte lastPressed;
-	
-	private byte NONE       = 0;
-	private byte NUMBER     = 1;
-	private byte MR         = 2;
-	private byte SQRT       = 3;
-	private byte PERCENTAGE = 4;
-	private byte EQUALS     = 5;
-	private byte OPERATOR   = 6;
-	
-	private JTextField displayField;
-	
+    private String currentOperation;
+    
+    private byte lastPressed;
+    
+    private byte NONE       = 0;
+    private byte NUMBER     = 1;
+    private byte MR         = 2;
+    private byte SQRT       = 3;
+    private byte PERCENTAGE = 4;
+    private byte EQUALS     = 5;
+    private byte OPERATOR   = 6;
+    
+    private JTextField displayField;
+    
     public CalculatorGUI()
     {
-    	resultFormat.setMaximumFractionDigits(4);
-    	calculationResult = 0.0;
-    	lastNumberEntered = 0.0;
-    	memoryValue = 0.0;
-    	currentOperation = "None";
-    	lastPressed = NONE;
-    	
-		JFrame frm = new JFrame("  Simple Calculator");
-		setFrameAttributes(frm);
-		
-		JPanel paddingPanel = new JPanel();
-		setPaddingPanelAttributes(paddingPanel);
-		frm.getContentPane().add(paddingPanel);
-		
-		/* Create the display panel */
-		JPanel displayPanel = new JPanel();
-		displayPanel.setBackground(UIManager.getColor("control"));
-		displayPanel.setBorder(new EmptyBorder(0, 0, 10, 0));
-		paddingPanel.add(displayPanel);
-		displayPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		addDisplayField(displayPanel);
-		
-		/* Create the button panels */
-		JPanel buttonPanel_0 = new JPanel();
-		setButtonPanelAttributes(buttonPanel_0);
-		paddingPanel.add(buttonPanel_0);
-		
-		addButton(buttonPanel_0, "MC", Font.PLAIN, 18);
-		addButton(buttonPanel_0, "MR", Font.PLAIN, 18);
-		addButton(buttonPanel_0, "M-", Font.PLAIN, 18);
-		addButton(buttonPanel_0, "M+", Font.PLAIN, 18);
-		
-		
-		JPanel buttonPanel_1 = new JPanel();
-		setButtonPanelAttributes(buttonPanel_1);
-		paddingPanel.add(buttonPanel_1);
-		
-		addButton(buttonPanel_1, "C", Font.PLAIN, 18);
-		addButton(buttonPanel_1, "-/+", Font.PLAIN, 16);
-		addButton(buttonPanel_1, "%", Font.PLAIN, 18);
-		addButton(buttonPanel_1, "SQRT", Font.PLAIN, 14);
-		
-		JPanel buttonPanel_2 = new JPanel();
-		setButtonPanelAttributes(buttonPanel_2);
-		paddingPanel.add(buttonPanel_2);
+        resultFormat.setMaximumFractionDigits(4);
+        calculationResult = 0.0;
+        lastNumberEntered = 0.0;
+        memoryValue = 0.0;
+        currentOperation = "None";
+        lastPressed = NONE;
+        
+        JFrame frm = new JFrame("  Simple Calculator");
+        setFrameAttributes(frm);
+        
+        JPanel paddingPanel = new JPanel();
+        setPaddingPanelAttributes(paddingPanel);
+        frm.getContentPane().add(paddingPanel);
+        
+        /* Create the display panel */
+        JPanel displayPanel = new JPanel();
+        displayPanel.setBackground(UIManager.getColor("control"));
+        displayPanel.setBorder(new EmptyBorder(0, 0, 10, 0));
+        paddingPanel.add(displayPanel);
+        displayPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        
+        addDisplayField(displayPanel);
+        
+        /* Create the button panels */
+        JPanel buttonPanel_0 = new JPanel();
+        setButtonPanelAttributes(buttonPanel_0);
+        paddingPanel.add(buttonPanel_0);
+        
+        addButton(buttonPanel_0, "MC", Font.PLAIN, 18);
+        addButton(buttonPanel_0, "MR", Font.PLAIN, 18);
+        addButton(buttonPanel_0, "M-", Font.PLAIN, 18);
+        addButton(buttonPanel_0, "M+", Font.PLAIN, 18);
+        
+        
+        JPanel buttonPanel_1 = new JPanel();
+        setButtonPanelAttributes(buttonPanel_1);
+        paddingPanel.add(buttonPanel_1);
+        
+        addButton(buttonPanel_1, "C", Font.PLAIN, 18);
+        addButton(buttonPanel_1, "-/+", Font.PLAIN, 16);
+        addButton(buttonPanel_1, "%", Font.PLAIN, 18);
+        addButton(buttonPanel_1, "SQRT", Font.PLAIN, 14);
+        
+        JPanel buttonPanel_2 = new JPanel();
+        setButtonPanelAttributes(buttonPanel_2);
+        paddingPanel.add(buttonPanel_2);
 
-		addButton(buttonPanel_2, "7", Font.PLAIN, 28);
-		addButton(buttonPanel_2, "8", Font.PLAIN, 28);
-		addButton(buttonPanel_2, "9", Font.PLAIN, 28);
-		addButton(buttonPanel_2, "/", Font.PLAIN, 18);
-		
-		JPanel buttonPanel_3 = new JPanel();
-		setButtonPanelAttributes(buttonPanel_3);
-		paddingPanel.add(buttonPanel_3);
+        addButton(buttonPanel_2, "7", Font.PLAIN, 28);
+        addButton(buttonPanel_2, "8", Font.PLAIN, 28);
+        addButton(buttonPanel_2, "9", Font.PLAIN, 28);
+        addButton(buttonPanel_2, "/", Font.PLAIN, 18);
+        
+        JPanel buttonPanel_3 = new JPanel();
+        setButtonPanelAttributes(buttonPanel_3);
+        paddingPanel.add(buttonPanel_3);
 
-		addButton(buttonPanel_3, "4", Font.PLAIN, 28);
-		addButton(buttonPanel_3, "5", Font.PLAIN, 28);
-		addButton(buttonPanel_3, "6", Font.PLAIN, 28);
-		addButton(buttonPanel_3, "X", Font.PLAIN, 18);
-		
-		JPanel buttonPanel_4 = new JPanel();
-		setButtonPanelAttributes(buttonPanel_4);
-		paddingPanel.add(buttonPanel_4);
-	    
-		addButton(buttonPanel_4, "1", Font.PLAIN, 28);
-		addButton(buttonPanel_4, "2", Font.PLAIN, 28);		
-		addButton(buttonPanel_4, "3", Font.PLAIN, 28);
-		addButton(buttonPanel_4, "-", Font.PLAIN, 18);
-		
-		JPanel buttonPanel_5 = new JPanel();
-		setButtonPanelAttributes(buttonPanel_5);
-		paddingPanel.add(buttonPanel_5);
-		
-		addButton(buttonPanel_5, "0", Font.PLAIN, 28);
-		addButton(buttonPanel_5, ".", Font.BOLD, 18);
-		addButton(buttonPanel_5, "=", Font.PLAIN, 18);
-		addButton(buttonPanel_5, "+", Font.PLAIN, 18);
-		
-		/* Display the frame */
-		frm.setVisible(true);
+        addButton(buttonPanel_3, "4", Font.PLAIN, 28);
+        addButton(buttonPanel_3, "5", Font.PLAIN, 28);
+        addButton(buttonPanel_3, "6", Font.PLAIN, 28);
+        addButton(buttonPanel_3, "X", Font.PLAIN, 18);
+        
+        JPanel buttonPanel_4 = new JPanel();
+        setButtonPanelAttributes(buttonPanel_4);
+        paddingPanel.add(buttonPanel_4);
+        
+        addButton(buttonPanel_4, "1", Font.PLAIN, 28);
+        addButton(buttonPanel_4, "2", Font.PLAIN, 28);      
+        addButton(buttonPanel_4, "3", Font.PLAIN, 28);
+        addButton(buttonPanel_4, "-", Font.PLAIN, 18);
+        
+        JPanel buttonPanel_5 = new JPanel();
+        setButtonPanelAttributes(buttonPanel_5);
+        paddingPanel.add(buttonPanel_5);
+        
+        addButton(buttonPanel_5, "0", Font.PLAIN, 28);
+        addButton(buttonPanel_5, ".", Font.BOLD, 18);
+        addButton(buttonPanel_5, "=", Font.PLAIN, 18);
+        addButton(buttonPanel_5, "+", Font.PLAIN, 18);
+        
+        /* Display the frame */
+        frm.setVisible(true);
     }
 
     
@@ -134,19 +134,19 @@ public class CalculatorGUI implements ActionListener, KeyListener
      * @param panel A panel to place the display field into.
      */
     private void addDisplayField(JPanel panel)
-    {	
-		displayField = new JTextField();
-		displayField.setEnabled(true);
-		displayField.setEditable(false);
-		displayField.setColumns(11);
-		displayField.setMargin(new Insets(1,3,1,3));
-		displayField.setBackground(Color.WHITE);
-		displayField.setFont(new Font("Dialog", Font.PLAIN, 24));
-		displayField.setHorizontalAlignment(SwingConstants.RIGHT);
-		displayField.setText("0");
-		displayField.addKeyListener(this);
-		
-		panel.add(displayField);
+    {   
+        displayField = new JTextField();
+        displayField.setEnabled(true);
+        displayField.setEditable(false);
+        displayField.setColumns(11);
+        displayField.setMargin(new Insets(1,3,1,3));
+        displayField.setBackground(Color.WHITE);
+        displayField.setFont(new Font("Dialog", Font.PLAIN, 24));
+        displayField.setHorizontalAlignment(SwingConstants.RIGHT);
+        displayField.setText("0");
+        displayField.addKeyListener(this);
+        
+        panel.add(displayField);
     }
     
     
@@ -157,10 +157,10 @@ public class CalculatorGUI implements ActionListener, KeyListener
      */
     private void setButtonPanelAttributes(JPanel panel) 
     {
-		panel.setBackground(UIManager.getColor("control"));
-		panel.setLayout(new GridLayout(0, 4, 5, 0));
-		panel.addKeyListener(this);
-	}
+        panel.setBackground(UIManager.getColor("control"));
+        panel.setLayout(new GridLayout(0, 4, 5, 0));
+        panel.addKeyListener(this);
+    }
     
     
     /**
@@ -170,13 +170,13 @@ public class CalculatorGUI implements ActionListener, KeyListener
      */
     private void setFrameAttributes(JFrame frame) 
     {
-		frame.setBackground(UIManager.getColor("control"));
-		frame.setResizable(false);
-		frame.setSize(270, 450);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new GridLayout(1, 1, 5, 0));
-		frame.addKeyListener(this);
-	}
+        frame.setBackground(UIManager.getColor("control"));
+        frame.setResizable(false);
+        frame.setSize(270, 450);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().setLayout(new GridLayout(1, 1, 5, 0));
+        frame.addKeyListener(this);
+    }
     
     
     /**
@@ -186,9 +186,9 @@ public class CalculatorGUI implements ActionListener, KeyListener
      */
     private void setPaddingPanelAttributes(JPanel panel)
     {
-		panel.setLayout(new GridLayout(7, 0, 10, 5));
-		panel.setBackground(UIManager.getColor("control"));
-		panel.setBorder(new EmptyBorder(15, 15, 25, 15));
+        panel.setLayout(new GridLayout(7, 0, 10, 5));
+        panel.setBackground(UIManager.getColor("control"));
+        panel.setBorder(new EmptyBorder(15, 15, 25, 15));
         panel.addKeyListener(this);
     }
     
@@ -202,15 +202,15 @@ public class CalculatorGUI implements ActionListener, KeyListener
      */
     private void addButton(JPanel panel, String text, int fontWeight, int fontSize) 
     {
-		JButton btn = new JButton(text);
-		btn.setBackground(SystemColor.info);
-		btn.setMargin(new Insets(1,1,1,1));   /* Reduce internal padding */
-		btn.setFont(new Font("Dialog", fontWeight, fontSize));
-		btn.addActionListener(this);
-		btn.addKeyListener(this);
-		
-		panel.add(btn);
-	}
+        JButton btn = new JButton(text);
+        btn.setBackground(SystemColor.info);
+        btn.setMargin(new Insets(1,1,1,1));   /* Reduce internal padding */
+        btn.setFont(new Font("Dialog", fontWeight, fontSize));
+        btn.addActionListener(this);
+        btn.addKeyListener(this);
+        
+        panel.add(btn);
+    }
     
     
     /**
@@ -218,11 +218,11 @@ public class CalculatorGUI implements ActionListener, KeyListener
      */
     private void clearContents()
     {
-    	displayField.setText("0");
-    	lastNumberEntered = 0.0;
-    	calculationResult = 0.0;
-    	lastPressed = NONE;
-    	currentOperation = "None";
+        displayField.setText("0");
+        lastNumberEntered = 0.0;
+        calculationResult = 0.0;
+        lastPressed = NONE;
+        currentOperation = "None";
     }
     
     
@@ -233,12 +233,12 @@ public class CalculatorGUI implements ActionListener, KeyListener
      */
     private void updateDisplayField(double n)
     {
-    	String result = resultFormat.format(n);
-    	
-    	if(result.length() > 15) {
-    		result = scientificFormat.format(n).toLowerCase();
-    	}
-    	
+        String result = resultFormat.format(n);
+        
+        if(result.length() > 15) {
+            result = scientificFormat.format(n).toLowerCase();
+        }
+        
         displayField.setText(result);
     }
     
@@ -250,8 +250,8 @@ public class CalculatorGUI implements ActionListener, KeyListener
      */
     private void addToDisplayField(String n)
     {
-    	String newValue = displayField.getText() + n;
-    	displayField.setText(newValue);
+        String newValue = displayField.getText() + n;
+        displayField.setText(newValue);
     }
     
     
@@ -261,15 +261,15 @@ public class CalculatorGUI implements ActionListener, KeyListener
      * @return The contents of the display field as a double.
      */
     private double getDisplayContentsAsDouble() {
-		double contents = 0.0;
-		
-		try {
-			contents = Double.parseDouble(displayField.getText());
-		} 
-		catch (Exception e) { ; }
-		
-		return contents;
-	}
+        double contents = 0.0;
+        
+        try {
+            contents = Double.parseDouble(displayField.getText());
+        } 
+        catch (Exception e) { ; }
+        
+        return contents;
+    }
     
     
     /**
@@ -277,21 +277,21 @@ public class CalculatorGUI implements ActionListener, KeyListener
      */
     private void toggleSign()
     {
-    	double currentlyDisplayed = getDisplayContentsAsDouble();
-    	if(currentlyDisplayed==0.0)
-    		return;
-    	else if(currentlyDisplayed < 0)
-    		currentlyDisplayed = Math.abs(currentlyDisplayed);
-    	else {
-			currentlyDisplayed = currentlyDisplayed * -1.0;
-		}
-    	
-    	updateDisplayField(currentlyDisplayed);
-    	
-    	/* This behaviour mimics the Windows calculator */
+        double currentlyDisplayed = getDisplayContentsAsDouble();
+        if(currentlyDisplayed==0.0)
+            return;
+        else if(currentlyDisplayed < 0)
+            currentlyDisplayed = Math.abs(currentlyDisplayed);
+        else {
+            currentlyDisplayed = currentlyDisplayed * -1.0;
+        }
+        
+        updateDisplayField(currentlyDisplayed);
+        
+        /* This behaviour mimics the Windows calculator */
         if (lastPressed == NUMBER) {
-			lastNumberEntered = currentlyDisplayed;
-		}
+            lastNumberEntered = currentlyDisplayed;
+        }
     }
     
     
@@ -301,21 +301,21 @@ public class CalculatorGUI implements ActionListener, KeyListener
      */
     private void doSquareRoot()
     {
-    	double currentlyDisplayed = getDisplayContentsAsDouble();
-    	
-    	if(lastPressed == EQUALS)
-    	{
-        	lastNumberEntered = 0.0;
-        	calculationResult = 0.0;
-        	lastPressed = NONE;
-        	currentOperation = "None";
-    	}
-    	
-    	if(currentlyDisplayed < 0.0) {
-     		displayField.setText("Math Domain Error");
-     		lastPressed = NONE;
-     		return;
-    	}
+        double currentlyDisplayed = getDisplayContentsAsDouble();
+        
+        if(lastPressed == EQUALS)
+        {
+            lastNumberEntered = 0.0;
+            calculationResult = 0.0;
+            lastPressed = NONE;
+            currentOperation = "None";
+        }
+        
+        if(currentlyDisplayed < 0.0) {
+            displayField.setText("Math Domain Error");
+            lastPressed = NONE;
+            return;
+        }
         
         currentlyDisplayed = Math.sqrt(currentlyDisplayed);
         lastPressed = SQRT;
@@ -329,10 +329,10 @@ public class CalculatorGUI implements ActionListener, KeyListener
      */
     private void doPercentage()
     {
-    	double currentlyDisplayed = getDisplayContentsAsDouble();
+        double currentlyDisplayed = getDisplayContentsAsDouble();
         
-    	double percentage = calculationResult * (currentlyDisplayed / 100.0);
-    	lastPressed = PERCENTAGE;
+        double percentage = calculationResult * (currentlyDisplayed / 100.0);
+        lastPressed = PERCENTAGE;
         updateDisplayField(percentage);
     }
     
@@ -343,37 +343,37 @@ public class CalculatorGUI implements ActionListener, KeyListener
      */
     private void doEqualsOperation()
     {
-    	if(lastPressed==NUMBER || lastPressed==MR || lastPressed==SQRT || lastPressed==PERCENTAGE)
-    	    	 lastNumberEntered = getDisplayContentsAsDouble();
+        if(lastPressed==NUMBER || lastPressed==MR || lastPressed==SQRT || lastPressed==PERCENTAGE)
+                 lastNumberEntered = getDisplayContentsAsDouble();
         
         switch(currentOperation)
         {
             case "/":
-             	if(lastNumberEntered == 0.0)
-             	{
-             		displayField.setText("Cannot divide by 0");
-             		lastPressed = NONE;
-             		return;
-             	}
-             	calculationResult = calculationResult / lastNumberEntered;
-         	    break;
+                if(lastNumberEntered == 0.0)
+                {
+                    displayField.setText("Cannot divide by 0");
+                    lastPressed = NONE;
+                    return;
+                }
+                calculationResult = calculationResult / lastNumberEntered;
+                break;
             case "X":
-             	calculationResult = calculationResult * lastNumberEntered;
-         	    break;
+                calculationResult = calculationResult * lastNumberEntered;
+                break;
             case "+":
-             	calculationResult = calculationResult + lastNumberEntered;
-         	    break;
+                calculationResult = calculationResult + lastNumberEntered;
+                break;
             case "-":
-             	calculationResult = calculationResult - lastNumberEntered;
-         	    break;
+                calculationResult = calculationResult - lastNumberEntered;
+                break;
             default:
-             	calculationResult = lastNumberEntered;
-             	return;
+                calculationResult = lastNumberEntered;
+                return;
          }
          
          updateDisplayField(calculationResult);
-     	 
-     	 lastPressed = EQUALS;
+         
+         lastPressed = EQUALS;
     }
     
     
@@ -384,52 +384,52 @@ public class CalculatorGUI implements ActionListener, KeyListener
      */
     private void performCalculation(String operatorString)
     {
-    	if(operatorString.equals("=")) {
-    		if(currentOperation.equals("None"))
-    			return;
-    		else {
-    			doEqualsOperation();
-				return;
-			}
-    	}
-    	
-    	/* This allows a further operation on the result */
-    	if(lastPressed == EQUALS)
-    		lastPressed = OPERATOR;
-    	
-    	/* If there was no number proceeding the press there is nothing to calculate */
+        if(operatorString.equals("=")) {
+            if(currentOperation.equals("None"))
+                return;
+            else {
+                doEqualsOperation();
+                return;
+            }
+        }
+        
+        /* This allows a further operation on the result */
+        if(lastPressed == EQUALS)
+            lastPressed = OPERATOR;
+        
+        /* If there was no number proceeding the press there is nothing to calculate */
         if (lastPressed!=NUMBER && lastPressed!=MR && lastPressed!=SQRT && lastPressed!=PERCENTAGE) {
-			return;
-		}
+            return;
+        }
         
         lastNumberEntered = getDisplayContentsAsDouble();
         
         switch(currentOperation)
         {
             case "/":
-            	if(lastNumberEntered == 0.0)
-            	{
-            		displayField.setText("Cannot divide by 0");
-            		lastPressed = NONE;
-            		return;
-            	}
-            	calculationResult = calculationResult / lastNumberEntered;
-        	    break;
+                if(lastNumberEntered == 0.0)
+                {
+                    displayField.setText("Cannot divide by 0");
+                    lastPressed = NONE;
+                    return;
+                }
+                calculationResult = calculationResult / lastNumberEntered;
+                break;
             case "X":
-            	calculationResult = calculationResult * lastNumberEntered;
-        	    break;
+                calculationResult = calculationResult * lastNumberEntered;
+                break;
             case "+":
-            	calculationResult = calculationResult + lastNumberEntered;
-        	    break;
+                calculationResult = calculationResult + lastNumberEntered;
+                break;
             case "-":
-            	calculationResult = calculationResult - lastNumberEntered;
-        	    break;
+                calculationResult = calculationResult - lastNumberEntered;
+                break;
             default:
-            	calculationResult = lastNumberEntered;
-            	lastPressed = OPERATOR;
-            	return;
+                calculationResult = lastNumberEntered;
+                lastPressed = OPERATOR;
+                return;
         }
-    		
+            
         lastPressed = OPERATOR;
         
         updateDisplayField(calculationResult);
@@ -442,15 +442,15 @@ public class CalculatorGUI implements ActionListener, KeyListener
      */
     private void deleteEndCharacter() 
     {
-		String test = displayField.getText();
-		
-	    if (test != null) {
-	    	if (test.length() > 0) {
-				test = test.substring(0, test.length() - 1);
-	            displayField.setText(test);
-			}
-	    }
-	}
+        String test = displayField.getText();
+        
+        if (test != null) {
+            if (test.length() > 0) {
+                test = test.substring(0, test.length() - 1);
+                displayField.setText(test);
+            }
+        }
+    }
     
     
     /**
@@ -460,17 +460,17 @@ public class CalculatorGUI implements ActionListener, KeyListener
      */
     private void doNumberPress(String input)
     {
-    	/* If a number is pressed after getting a result, or recalling 
-    	 * the contents of memory, this starts a new calculation */
-    	if(lastPressed==MR || lastPressed==EQUALS || lastPressed==SQRT || lastPressed==PERCENTAGE)
-    		clearContents();
-    	
-		if(lastPressed != NUMBER) {
-			displayField.setText("");
-		}
-		
-		lastPressed = NUMBER;
-		addToDisplayField(input);
+        /* If a number is pressed after getting a result, or recalling 
+         * the contents of memory, this starts a new calculation */
+        if(lastPressed==MR || lastPressed==EQUALS || lastPressed==SQRT || lastPressed==PERCENTAGE)
+            clearContents();
+        
+        if(lastPressed != NUMBER) {
+            displayField.setText("");
+        }
+        
+        lastPressed = NUMBER;
+        addToDisplayField(input);
     }
     
     
@@ -481,174 +481,174 @@ public class CalculatorGUI implements ActionListener, KeyListener
      */
     private void doDecimalPointPress()
     {
-    	/* If a number is pressed after getting a result, or recalling 
-    	 * the contents of memory, this starts a new calculation */
-    	if(lastPressed==MR || lastPressed==EQUALS || lastPressed==SQRT || lastPressed==PERCENTAGE)
-    		clearContents();
-    	
-		if(lastPressed != NUMBER) {
-			displayField.setText("");
-		}
-		lastPressed = NUMBER;
-		
-		String test = displayField.getText();
-		if (test.contains(".")) {
-			return;
-		}
-		else if (test.length()==0) {
-			addToDisplayField("0.");
-		}
-		else {
-			addToDisplayField(".");
-		}
+        /* If a number is pressed after getting a result, or recalling 
+         * the contents of memory, this starts a new calculation */
+        if(lastPressed==MR || lastPressed==EQUALS || lastPressed==SQRT || lastPressed==PERCENTAGE)
+            clearContents();
+        
+        if(lastPressed != NUMBER) {
+            displayField.setText("");
+        }
+        lastPressed = NUMBER;
+        
+        String test = displayField.getText();
+        if (test.contains(".")) {
+            return;
+        }
+        else if (test.length()==0) {
+            addToDisplayField("0.");
+        }
+        else {
+            addToDisplayField(".");
+        }
     }
     
     
     /**
      * The method actionPerformed deals with button press events.
      */
-	@Override
-	public void actionPerformed(ActionEvent ae) 
-	{
-		String pressString;
-		pressString = ae.getActionCommand();
-		
-		switch(pressString)
-		{
-			case "9": case "8": case "7": case "6": case "5":
-			case "4": case "3": case "2": case "1": case "0":
-				doNumberPress(pressString);
-				break;
-			case ".":
-				doDecimalPointPress();
-				break;
-
-			case "/": case "X": case "-": case "+": case "=":
-				performCalculation(pressString);
-				
-				if(lastPressed == NONE) {
-					currentOperation = "None";
-					calculationResult = 0.0;
-					lastNumberEntered = 0.0;
-				}
-				else if(!pressString.equals("="))
-				{
-					currentOperation = pressString;
-				}
-    				
-				break;
-			case "%":
-				doPercentage();
-				break;
-			case "-/+":
-				toggleSign();
-				break;
-			case "SQRT":
-				doSquareRoot();
-				if(lastPressed == NONE) {
-					currentOperation = "None";
-					calculationResult = 0.0;
-					lastNumberEntered = 0.0;
-				}
-				break;
-			case "C":
-				clearContents();
-				break;
-			case "MC":
-				memoryValue = 0.0;
-				break;
-			case "MR":
-				updateDisplayField(memoryValue);
-				lastPressed = MR;
-				break;
-			case "M-":
-				memoryValue = memoryValue - getDisplayContentsAsDouble();
-				break;
-			case "M+":
-				memoryValue = memoryValue + getDisplayContentsAsDouble();
-				break;
-			default:
-				break;
-		}
-	}
-
-
-	/**
-	 * The method keyPressed deals with key press events.
-	 */
-	@Override
-	public void keyPressed(KeyEvent e) 
-	{
-		char input;
-		
-		/* If the user has pressed the escape key quit the application */
-		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-			System.exit(0);
-		}
-		
-		/* Use the ENTER press as the '=' key */
-        if(e.getKeyCode() == KeyEvent.VK_ENTER)
-        	input = '=';
-        else
-    		input = e.getKeyChar();
-				
-		if(input == '*')
-			input = 'X';
+    @Override
+    public void actionPerformed(ActionEvent ae) 
+    {
+        String pressString;
+        pressString = ae.getActionCommand();
         
-		if(Character.isDigit(input)) 
-		{
-			doNumberPress("" + input);
-		}
-		else if (input == '.') 
-		{
-			doDecimalPointPress();
-		}
-		else if (input == '\b') 
-		{
-			deleteEndCharacter();
-		}
-		else if (input == 'c' || input == 'C') 
-		{
-			clearContents();
-		}
-		else 
-		{
-			switch(input)
-			{
-				case '/': case 'X': case '-': case '+': case '=':
-					performCalculation("" + input);
-					
-					if(lastPressed == NONE) {
-						currentOperation = "None";
-						calculationResult = 0.0;
-						lastNumberEntered = 0.0;
-					} 
-					else if(input != '=')
-					{
-						currentOperation = "" + input;
-					}
-	    				
-					break;
-				case '%':
-					doPercentage();
-					break;
-				default:
-					break;
-			}
-		}
-	}
+        switch(pressString)
+        {
+            case "9": case "8": case "7": case "6": case "5":
+            case "4": case "3": case "2": case "1": case "0":
+                doNumberPress(pressString);
+                break;
+            case ".":
+                doDecimalPointPress();
+                break;
+
+            case "/": case "X": case "-": case "+": case "=":
+                performCalculation(pressString);
+                
+                if(lastPressed == NONE) {
+                    currentOperation = "None";
+                    calculationResult = 0.0;
+                    lastNumberEntered = 0.0;
+                }
+                else if(!pressString.equals("="))
+                {
+                    currentOperation = pressString;
+                }
+                    
+                break;
+            case "%":
+                doPercentage();
+                break;
+            case "-/+":
+                toggleSign();
+                break;
+            case "SQRT":
+                doSquareRoot();
+                if(lastPressed == NONE) {
+                    currentOperation = "None";
+                    calculationResult = 0.0;
+                    lastNumberEntered = 0.0;
+                }
+                break;
+            case "C":
+                clearContents();
+                break;
+            case "MC":
+                memoryValue = 0.0;
+                break;
+            case "MR":
+                updateDisplayField(memoryValue);
+                lastPressed = MR;
+                break;
+            case "M-":
+                memoryValue = memoryValue - getDisplayContentsAsDouble();
+                break;
+            case "M+":
+                memoryValue = memoryValue + getDisplayContentsAsDouble();
+                break;
+            default:
+                break;
+        }
+    }
 
 
-	/**
-	 * Required by KeyListener interface
-	 */
-	@Override
-	public void keyReleased(KeyEvent e) { ; }
+    /**
+     * The method keyPressed deals with key press events.
+     */
+    @Override
+    public void keyPressed(KeyEvent e) 
+    {
+        char input;
+        
+        /* If the user has pressed the escape key quit the application */
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            System.exit(0);
+        }
+        
+        /* Use the ENTER press as the '=' key */
+        if(e.getKeyCode() == KeyEvent.VK_ENTER)
+            input = '=';
+        else
+            input = e.getKeyChar();
+                
+        if(input == '*')
+            input = 'X';
+        
+        if(Character.isDigit(input)) 
+        {
+            doNumberPress("" + input);
+        }
+        else if (input == '.') 
+        {
+            doDecimalPointPress();
+        }
+        else if (input == '\b') 
+        {
+            deleteEndCharacter();
+        }
+        else if (input == 'c' || input == 'C') 
+        {
+            clearContents();
+        }
+        else 
+        {
+            switch(input)
+            {
+                case '/': case 'X': case '-': case '+': case '=':
+                    performCalculation("" + input);
+                    
+                    if(lastPressed == NONE) {
+                        currentOperation = "None";
+                        calculationResult = 0.0;
+                        lastNumberEntered = 0.0;
+                    } 
+                    else if(input != '=')
+                    {
+                        currentOperation = "" + input;
+                    }
+                        
+                    break;
+                case '%':
+                    doPercentage();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
 
-	/**
-	 * Required by KeyListener interface
-	 */
-	@Override
-	public void keyTyped(KeyEvent e) { ; }
+    /**
+     * Required by KeyListener interface
+     */
+    @Override
+    public void keyReleased(KeyEvent e) { ; }
+
+
+    /**
+     * Required by KeyListener interface
+     */
+    @Override
+    public void keyTyped(KeyEvent e) { ; }
 }
