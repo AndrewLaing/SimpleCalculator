@@ -7,12 +7,12 @@
  */
 package com.software.laing.calculator;
 
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import java.text.DecimalFormat;
 
 import javax.swing.*;
@@ -122,6 +122,10 @@ public class CalculatorGUI implements ActionListener, KeyListener
         addButton(buttonPanel_5, ".", Font.BOLD, 18);
         addButton(buttonPanel_5, "=", Font.PLAIN, 18);
         addButton(buttonPanel_5, "+", Font.PLAIN, 18);
+        
+        /* Set up the sound effects*/
+        SoundEffect.init();
+        SoundEffect.volume = SoundEffect.Volume.LOW;
         
         /* Display the frame */
         frm.setVisible(true);
@@ -312,6 +316,7 @@ public class CalculatorGUI implements ActionListener, KeyListener
         }
         
         if(currentlyDisplayed < 0.0) {
+            SoundEffect.ERROR.play();
             displayField.setText("Math Domain Error");
             lastPressed = NONE;
             return;
@@ -351,6 +356,7 @@ public class CalculatorGUI implements ActionListener, KeyListener
             case "/":
                 if(lastNumberEntered == 0.0)
                 {
+                    SoundEffect.ERROR.play();
                     displayField.setText("Cannot divide by 0");
                     lastPressed = NONE;
                     return;
@@ -409,6 +415,7 @@ public class CalculatorGUI implements ActionListener, KeyListener
             case "/":
                 if(lastNumberEntered == 0.0)
                 {
+                    SoundEffect.ERROR.play();
                     displayField.setText("Cannot divide by 0");
                     lastPressed = NONE;
                     return;
@@ -513,6 +520,13 @@ public class CalculatorGUI implements ActionListener, KeyListener
         String pressString;
         pressString = ae.getActionCommand();
         
+        /* Play sound effect */
+        if(pressString.equals("C")) {
+            SoundEffect.CLEAR.play();
+        } else {
+            SoundEffect.CLICK.play();
+        }
+        
         switch(pressString)
         {
             case "9": case "8": case "7": case "6": case "5":
@@ -594,6 +608,13 @@ public class CalculatorGUI implements ActionListener, KeyListener
                 
         if(input == '*')
             input = 'X';
+        
+        if( input=='c' || input=='C' ) {
+            SoundEffect.CLEAR.play();
+        } else {
+            SoundEffect.CLICK.play();
+        }
+            
         
         if(Character.isDigit(input)) 
         {
