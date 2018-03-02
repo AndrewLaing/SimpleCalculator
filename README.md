@@ -1,4 +1,4 @@
 # SimpleCalculator
-A simple desktop calculator written in Java.
+A simple Desktop Calculator written in Java.
 <br /><br />
 ![User Interface](SimpleCalculator.jpg)
